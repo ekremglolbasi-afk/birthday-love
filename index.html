@@ -27,8 +27,8 @@ overflow-x:hidden;
 position:fixed;
 bottom:-50px;
 font-size:20px;
-animation:float 10s linear infinite;
-opacity:0.6;
+animation:float 8s linear infinite;
+opacity:0.7;
 }
 
 @keyframes float{
@@ -57,7 +57,7 @@ transform:translateY(0);
 }
 
 h1{
-font-size:3rem;
+font-size:2.5rem;
 margin-bottom:20px;
 }
 
@@ -70,10 +70,10 @@ line-height:1.6;
 /* Button */
 
 button{
-margin-top:30px;
-padding:15px 30px;
+margin-top:25px;
+padding:12px 25px;
 border:none;
-border-radius:30px;
+border-radius:25px;
 background:white;
 color:#ff4b6e;
 cursor:pointer;
@@ -86,11 +86,62 @@ background:#ff4b6e;
 color:white;
 }
 
-/* Countdown */
+/* Counter */
 
-#countdown{
-font-size:2rem;
+#countdown, #loveCounter{
+margin-top:10px;
+font-size:1.5rem;
+}
+
+/* Galerie */
+
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+gap:10px;
+width:90%;
 margin-top:20px;
+}
+
+.gallery img{
+width:100%;
+border-radius:12px;
+transition:0.4s;
+}
+
+.gallery img:hover{
+transform:scale(1.05);
+}
+
+/* Popup */
+
+.popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.7);
+display:flex;
+justify-content:center;
+align-items:center;
+visibility:hidden;
+opacity:0;
+transition:0.4s;
+}
+
+.popup.active{
+visibility:visible;
+opacity:1;
+}
+
+.popup-content{
+background:white;
+color:black;
+padding:30px;
+border-radius:20px;
+max-width:400px;
+text-align:center;
 }
 
 </style>
@@ -100,65 +151,105 @@ margin-top:20px;
 
 <div class="hearts" id="hearts"></div>
 
+<!-- SECTION 1 -->
+
 <section class="show">
+
 <h1>Alles Gute zum Geburtstag ❤️</h1>
 <p>Diese Webseite ist nur für dich, mein Schatz.</p>
 
 <div id="countdown"></div>
+<div id="loveCounter"></div>
+
+<div class="gallery">
+
+<img src="foto1.jpg">
+<img src="foto2.jpg">
+<img src="foto3.jpg">
+<img src="foto4.jpg">
+<img src="foto5.jpg">
+<img src="foto6.jpg">
+<img src="foto7.jpg">
+<img src="foto8.jpg">
+<img src="foto9.jpg">
+<img src="foto10.jpg">
+
+</div>
 
 <button onclick="scrollNext()">Weiter</button>
+
 </section>
 
+<!-- SECTION 2 -->
+
 <section>
+
 <h1>Unsere Geschichte 📖</h1>
+
 <p>
 Am 25.04.2025 hat unsere Geschichte begonnen.  
-Ein Moment, der mein Leben komplett verändert hat.  
-Seit diesem Tag bist du nicht nur ein Teil meines Lebens,  
-sondern der schönste Teil davon.  
+Ein Moment, der mein Leben verändert hat.  
 
-Mit dir fühlt sich alles leichter an, alles echter.  
-Jeder Moment mit dir ist etwas Besonderes  
-und ich würde keinen einzigen davon eintauschen. ❤️
+Seit diesem Tag bist du nicht einfach nur jemand für mich,  
+du bist mein Zuhause geworden.  
+
+Mit dir fühlt sich alles richtig an.  
+Jeder Moment mit dir ist besonders und ich bin dankbar  
+für jeden einzelnen Tag mit dir ❤️
 </p>
+
 </section>
 
+<!-- SECTION 3 -->
+
 <section>
+
 <h1>Warum ich dich liebe ❤️</h1>
+
 <p>
 Ich liebe dein Lächeln.  
 Ich liebe deine Art.  
 Ich liebe wie du mich glücklich machst.  
-Und ich liebe einfach alles an dir.  
+Und ich liebe einfach alles an dir.
 </p>
 
 <button onclick="openPopup()">Liebesbrief öffnen 💌</button>
+
 </section>
 
+<!-- SECTION 4 -->
+
 <section>
+
 <h1>Überraschung 🎁</h1>
+
 <button onclick="alert('Deine Überraschung bekommst du auf dein WhatsApp ❤️')">
 Überraschung öffnen
 </button>
+
 </section>
 
-<!-- Popup -->
+<!-- POPUP -->
 
-<div id="popup" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);display:flex;justify-content:center;align-items:center;visibility:hidden;opacity:0;transition:0.4s;">
-<div style="background:white;color:black;padding:30px;border-radius:20px;text-align:center;max-width:400px;">
+<div class="popup" id="popup">
+<div class="popup-content">
+
 <h2>Für dich ❤️</h2>
+
 <p>
 Ich liebe dich ❤️  
 Alles Gute zum Geburtstag mein Schatz.  
 Du bist das Beste, was mir passiert ist.
 </p>
+
 <button onclick="closePopup()">Schließen</button>
+
 </div>
 </div>
 
 <script>
 
-/* Scroll */
+/* Scroll Animation */
 
 const sections=document.querySelectorAll("section");
 
@@ -181,16 +272,14 @@ window.scrollBy({top:window.innerHeight,behavior:"smooth"});
 /* Popup */
 
 function openPopup(){
-document.getElementById("popup").style.visibility="visible";
-document.getElementById("popup").style.opacity="1";
+document.getElementById("popup").classList.add("active");
 }
 
 function closePopup(){
-document.getElementById("popup").style.visibility="hidden";
-document.getElementById("popup").style.opacity="0";
+document.getElementById("popup").classList.remove("active");
 }
 
-/* Countdown (Geburtstag 20.03.2026) */
+/* Geburtstag Countdown */
 
 const birthday=new Date("2026-03-20").getTime();
 
@@ -202,7 +291,22 @@ const days=Math.floor(diff/(1000*60*60*24));
 const hours=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
 
 document.getElementById("countdown").innerHTML=
-"Noch "+days+" Tage "+hours+" Stunden ❤️";
+"Noch "+days+" Tage "+hours+" Stunden bis zu deinem Geburtstag ❤️";
+},1000);
+
+/* Beziehung Counter */
+
+const startDate=new Date("2025-04-25").getTime();
+
+setInterval(()=>{
+const now=new Date().getTime();
+const diff=now-startDate;
+
+const days=Math.floor(diff/(1000*60*60*24));
+const hours=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+
+document.getElementById("loveCounter").innerHTML=
+"Wir sind seit "+days+" Tagen "+hours+" Stunden zusammen ❤️";
 },1000);
 
 /* Herzen */
@@ -216,9 +320,9 @@ heart.style.left=Math.random()*100+"vw";
 
 hearts.appendChild(heart);
 
-setTimeout(()=>heart.remove(),10000);
+setTimeout(()=>heart.remove(),8000);
 
-},500);
+},400);
 
 </script>
 
